@@ -2,7 +2,7 @@ import React from "react";
 import { createStackNavigator } from "react-navigation-stack";
 import { createDrawerNavigator } from "react-navigation-drawer";
 import { createAppContainer } from "react-navigation";
-import { Platform } from "react-native";
+import { Platform, Text } from "react-native";
 import { createBottomTabNavigator } from "react-navigation-tabs";
 import { Ionicons } from "@expo/vector-icons";
 import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
@@ -48,7 +48,7 @@ const tabScreenConfig = {
   Meals: {
     screen: MealsNavigator,
     navigationOptions: {
-      tabBarLabel: "MEALS",
+      tabBarLabel: Platform.OS === "android" ? <Text style={{fontFamily: "open-sans-bold"}}>Meals</Text>: "Meals" ,
       tabBarIcon: (tabInfo) => {
         return (
           <Ionicons name="ios-restaurant" size={25} color={tabInfo.tintColor} />
@@ -60,7 +60,7 @@ const tabScreenConfig = {
   Favorites: {
     screen: FavNavigator,
     navigationOptions: {
-      tabBarLabel: "FAVORITES",
+      tabBarLabel: Platform.OS === "android" ? <Text style={{fontFamily: "open-sans-bold"}}>Favorites</Text>: "Favorites" ,
       tabBarIcon: (tabInfo) => {
         return <Ionicons name="ios-star" size={25} color={tabInfo.tintColor} />;
       },
@@ -79,10 +79,9 @@ const MealsFavTabNavigator =
         },
       })
     : createBottomTabNavigator(tabScreenConfig, {
-        tabBarOptions: {
           activeTintColor: Colors.primaryColor,
         },
-      });
+      );
 
 const FiltersNavigator = createStackNavigator(
   {
